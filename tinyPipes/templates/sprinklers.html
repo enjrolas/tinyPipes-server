@@ -1,0 +1,9 @@
+sprinklers:
+<div>
+{% for sprinkler in sprinklers %}
+ <span> {{ sprinkler.ipAddress }}</span>
+ <span> {{ sprinkler.heartbeart }}</span>
+ <span> {{ sprinkler.load }}</span>
+ <span> {{ sprinkler.sprinklerCountry }}</span>
+{% endfor %}
+</div>
