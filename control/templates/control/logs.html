@@ -1,0 +1,67 @@
+{% extends "control/navPage.html" %}
+{% load staticfiles %}
+{% load tinyExtras %}
+{% block styling %}
+  <link rel="stylesheet" type="text/css" href="{% static "css/logs.css" %}">
+{% endblock %}
+{% block content %}
+<div id="logs">
+<b>TinyPipes communications logs</b>
+<div class="logGroup">
+<div class="logHeader">Squirts<div class="smaller">(messages from pipes back to the system)</div></div>
+<ul class="logTable">    
+<div class="logHeader">
+  <li id="fixed" class="row">
+    <span id="fAccount">Account owner</span>
+    <span id="fPhoneNumber">Pipe Phone Number</span>
+    <span id="fMessage">Message</span>
+    <span id="fTimestamp">Timestamp</span>
+  </li>
+  <li id="header" class="row">
+    <span id="tAccount">Account owner</span>
+    <span id="tPhoneNumber">Pipe Phone Number</span>
+    <span id="tMessage">Message</span>
+    <span id="tTimestamp">Timestamp</span>
+  </li>
+</div>
+<div class="logBody">
+{% for squirt in squirts %}
+<li class="row">
+  <span>{{ squirt.pipe.origin.account.name }}</span>
+  <span>{{ squirt.origin.phoneNumber | formatNumber }}</span>
+  <span>{{ squirt.content }}</span>
+  <span>{{ squirt.timeStamp }}</span>
+</li>
+{% endfor %}
+</ul>
+</div>
+<div class="logGroup">
+<div class="logHeader">Sprays<div class="smaller">(messages from the system to the pipes)</div></div>
+<ul class="logTable">    
+<div class="logHeader">
+  <li id="fixed" class="row">
+    <span id="fAccount">Account owner</span>
+    <span id="fPhoneNumber">Pipe Phone Number</span>
+    <span id="fMessage">Message</span>
+    <span id="fTimestamp">Timestamp</span>
+  </li>
+  <li id="header" class="row">
+    <span id="tAccount">Account owner</span>
+    <span id="tPhoneNumber">Pipe Phone Number</span>
+    <span id="tMessage">Message</span>
+    <span id="tTimestamp">Timestamp</span>
+  </li>
+</div>
+<div class="logBody">
+{% for spray in sprays %}
+<li class="row">
+  <span>{{ spray.destination.account.name }}</span>
+  <span>{{ spray.destination.phoneNumber | formatNumber }}</span>
+  <span>{{ spray.content }}</span>
+  <span>{{ spray.timeStamp }}</span>
+</li>
+{% endfor %}
+</ul>
+</div>
+</div>
+{% endblock %}

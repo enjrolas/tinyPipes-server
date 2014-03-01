@@ -1,0 +1,15 @@
+body{
+font-family: 'Quattrocento', serif;
+}
+
+div#header{
+text-align:center;
+}
+
+div#tagline{
+margin-left:300px;
+}
+
+img#logo{
+width: 400px;
+}

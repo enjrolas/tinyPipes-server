@@ -19,7 +19,7 @@ DATABASES = {
         'NAME': 'tinyPipes',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': 'tinyPipes',
-        'PASSWORD': 'TvUxHTKpDuFAJUaE',
+        'PASSWORD': 'WPGhX6qeqVtLvr5j',
         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
 # In a Windows environment this must be set to your system time zone.
-TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Asia/Hong_Kong'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -65,7 +65,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/var/www/example.com/static/"
-STATIC_ROOT = ''
+#STATIC_ROOT = '/home/valve/crap'
 
 # Absolute path to the directory static files should be collected to.                                                                                                                
 # Don't put anything in this directory yourself; store your static files                                                                                                             
@@ -76,13 +76,15 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, "static")
 
 # URL prefix for static files.                                                                                                                                                       
 # Example: "http://media.lawrence.com/static/"                                                                                                                                       
-STATIC_URL = 'http://control.tinypipes.net/static/'
+STATIC_URL = 'http://static.tinypipes.net/'
+
 
 # Additional locations of static files
 STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+#    "/home/valve/tinyPipes-static/static"
 )
 
 # List of finder classes that know how to find static files in
@@ -109,6 +111,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    #uncomment the next line to lockdown the entire site
+    # 'lockdown.middleware.LockdownMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -125,6 +129,16 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
+
+TEMPLATE_CONTEXT_PROCESSORS=(
+'django.core.context_processors.request',
+"django.contrib.auth.context_processors.auth",
+"django.core.context_processors.debug",
+"django.core.context_processors.i18n",
+"django.core.context_processors.media",
+"django.core.context_processors.static",
+"django.contrib.messages.context_processors.messages")
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -134,13 +148,29 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    'country',
     'control',
     'pipe',
     'sprinkler',
-    'communications',
     'account',
     'south',
+#    'lockdown',
+    'demo',
+    'firmwareUpdate',
+)
+LOCKDOWN_PASSWORDS = ('tiny', 'pipes')
+
+LOCKDOWN_URL_EXCEPTIONS = (
+    r'^/heartbeat/(.*)$',   # unlock /heartbeat/
+    r'^/enable/$',   # unlock /enable/
+    r'^/disable/$',   # unlock /disable/
+    r'^/data-energy/$',   # unlock /disable/
+    r'^/data-voltage/$',   # unlock /disable/
+    r'^/demo/$',   # unlock /disable/
+    r'^/measurement/(.*)$',   # unlock /disable/
+    r'^/demoData/$',   # unlock /disable/
+    r'^/demoControl/$',   # unlock /disable/
+    r'^/firmware/$',
+    r'^/getSpray/$',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -148,26 +178,51 @@ INSTALLED_APPS = (
 # the site admins on every HTTP 500 error when DEBUG=False.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
 # more details on how to customize your logging configuration.
+
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
     'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
     },
     'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
+        'console':{
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
         'mail_admins': {
             'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
+            'class': 'django.utils.log.AdminEmailHandler',
+        },
+        'file': {
+           'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(PROJECT_ROOT, "django-log/log"),
+        },
     },
     'loggers': {
+        'django': {
+            'handlers': ['null'],
+            'propagate': True,
+            'level': 'INFO',
+        },
         'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
+            'handlers': ['file'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     }
 }
+

@@ -1,7 +1,7 @@
 import os
 import sys
 
-path = '/home/japhy/tinyPipes-django/'
+path = '/home/valve/tinyPipes-django/'
 
 if path not in sys.path:
     sys.path.append(path)

@@ -1,0 +1,11 @@
+from django.conf.urls import patterns, url
+from sprinkler import views
+
+urlpatterns = patterns(
+    'sprinkler.views',
+    url(r'^heartbeat/', views.heartbeat, name='heartbeat'),
+    url(r'^texttext/', views.texttext),
+    url(r'^sendtext/', views.sendtext),
+    url(r'^getSpray/(?P<phoneNumber>.+)/$', views.getSpray),
+    url(r'^addSquirt/', views.addSquirt),
+    )

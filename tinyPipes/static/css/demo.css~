@@ -1,0 +1,12 @@
+#title{
+    height: 100px; 
+    line-height: 100px;
+    text-align: center;
+}
+#titleText{ 
+    display: inline-block;
+}
+#logo{
+    float: right;
+
+}

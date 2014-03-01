@@ -1,0 +1,24 @@
+{% extends "control/navPage.html" %}
+{% load tinyExtras %}
+{% block content %}
+
+active sprinklers:
+<br/>
+<ul class="sprinkler header" >
+ <li class="sprinkler"> ID </li>
+ <li class="sprinkler"> Country </li>
+ <li class="sprinkler"> Phone Number </li>
+ <li class="sprinkler"> latest heartbeat </li>
+</ul>
+<br/>
+{% for sprinkler in sprinklers %}
+<ul class="sprinkler">
+ <li class="sprinkler"> {{ sprinkler.pk }}</li>
+ <li class="sprinkler"><img src="http://flagpedia.net/data/flags/small/{{ sprinkler.country.abbreviation | lower }}.png" width="25%"></li>
+ <li class="sprinkler"> {{ sprinkler.country.countryCode }} {{ sprinkler.phoneNumber | nationalNumber }}</li>
+ <li class="sprinkler"> {{ sprinkler.heartbeat }}</li>
+
+</ul>
+<br/>
+{% endfor %}
+{% endblock %}

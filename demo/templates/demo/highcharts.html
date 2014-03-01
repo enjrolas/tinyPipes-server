@@ -1,0 +1,95 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>TinyFittings</title>
+    
+    
+    <!-- 1. Add these JavaScript inclusions in the head of your page -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://static.tinypipes.net/js/highcharts.src.js"></script>
+    
+    
+    <!-- 2. Add the JavaScript to initialize the chart on document ready -->
+    <script type="text/javascript">
+      var chart; // global
+      
+      /**
+       * Request data from the server, add it to the graph and set a timeout to request again
+       */
+      function requestData() {
+      $.ajax({
+      url: 'http://valve.tinypipes.net/data', 
+      success: function(point) {
+      var series = chart.series[0],
+      shift = series.data.length > 20; // shift if the series is longer than 20
+      points=eval(point)
+      for(a=0;a<2;a++)
+		    chart.series[a].addPoint(new Array(parseInt(points[0]), parseInt(points[a+1])), true, shift);
+        
+      // call it again after one second
+      setTimeout(requestData, 500);
+      },
+      cache: false
+      });
+      }
+      
+      $(document).ready(function() {
+      chart = new Highcharts.Chart({
+      chart: {
+      renderTo: 'container',
+      defaultSeriesType: 'spline',
+      events: {
+      load: requestData
+      }
+      },
+      title: {
+      text: 'Live tinyFitting data:  light levels over time in Mantis Lab'
+      },
+      xAxis: {
+      type: 'datetime',
+dateTimeLabelFormats: { //force all formats to be hour:minute:second
+            second: '%H:%M:%S',
+            minute: '%H:%M:%S',
+            hour: '%H:%M:%S',
+            day: '%H:%M:%S',
+            week: '%H:%M:%S',
+            month: '%H:%M:%S',
+            year: '%H:%M:%S'
+        },
+tickPixelInterval: 150,
+      },
+      yAxis: {
+      minPadding: 0.2,
+      maxPadding: 0.2,
+      title: {
+      text: 'Light Intensity (Lux)',
+      margin: 80
+      }
+      },
+        plotOptions: {
+            series: {
+                marker: {
+                    enabled: false
+                }
+            }
+        },
+        
+      series: [{
+      name: 'outdoor ambient light(2nd floor)',
+      data: []
+      }, {
+      name: 'indoor ambient light(2nd floor)',
+      data: []
+      }]
+      });
+      });
+      </script>
+    
+    </head>
+<body>
+  <center>COMING TO YOU LIVE FROM MANTIS LABS, MANILA</center>
+  <div id="container" style="width: 800px; height: 400px; margin: 0 auto"></div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% extends "control/navPage.html" %}
+{% block styling %}
+  <link rel="stylesheet" type="text/css" href="{% static "css/logs.css" %}">
+{% endblock %}
+{% block content %}
+TinyPipes communications logs
+<div class="logHeader squirtHeader">Squirts<div class="smaller">(messages from pipes back to the command center)</div></div>
+<table id="squirtTable" class="tablesorter">
+<thead>
+<tr class="logCategories squirt">
+  <td>From Account Number</td>
+  <td>From Phone Number</td>
+  <td>To Sprinkler Number</td>
+  <td>Message</td>
+  <td>Timestamp</td>
+</tr>
+</thead>
+<tbody>
+{% for squirt in squirts %}
+<tr class="logEntry squirt">
+  <td>{{ squirt.origin.serialNumber }}</td>
+  <td>{{ squirt.origin.phoneNumber }}</td>
+  <td>{{ squirt.sprinkler.name }}</td>
+  <td>{{ squirt.content }}</td>
+  <td>{{ squirt.timeStamp }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<div class="logHeader sprayHeader">Sprays<div class="smaller">(command center to pipe communiqués)</div></div>
+<table id="sprayTable" class="tablesorter">
+<thead>
+<tr class="logCategories spray">
+  <td>From Sprinkler Number</td>
+  <td>To Account Number</td>
+  <td>To Phone Number</td>
+  <td>Message</td>
+  <td>Timestamp</td>
+</tr>
+</thead>
+
+<tbody>
+{% for spray in sprays %}
+<tr class="logEntry spray">
+  <td>{{ spray.sprinkler.name }}</td>
+  <td>{{ spray.destination.serialNumber }}</td>
+  <td>{{ spray.destination.phoneNumber }}</td>
+  <td>{{ spray.content }}</td>
+  <td>{{ spray.timeStamp }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "control/navPage.html" %}
+{% load static %}
+{% block styling %}
+  <link rel="stylesheet" type="text/css" href="{% static "css/accounts.css" %}">
+  <script src="{% static "js/accounts.js" %}"></script>
+  <script type="text/javascript">  function command(command, id){
+    $.post("{% url 'command' %}", {'command':command, 'pipe':id, 'csrfmiddlewaretoken': '{{ csrf_token }}'});
+}
+    </script>
+{% endblock %}
+{% block content %}
+<div id="accounts">
+user accounts: 
+<ul class="accountTable">
+    <div class="accountHeader">
+        <li id="fixed" class="row">
+            <span id="fName">Name</span>
+            <span id="fCountry">Country</span>
+            <span id="fStatus">Status</span>
+            <span id="fCommands">Commands</span>
+        </li>
+        <li id="header" class="row">
+            <span id="tName">Name</span>
+            <span id="tCountry">Country</span>
+            <span id="tStatus">Status</span>
+            <span id="tCommands">Commands</span>
+        </li>
+	</div>
+<div class="accountBody">
+{% for pipe in pipes %}
+  <li class="row">
+ <span> {{ pipe.account.name }}</span>
+ <span> 
+<img class="country" src="http://flagpedia.net/data/flags/small/{{ pipe.country.abbreviation | lower }}.png" width="25%">
+</span>
+<span>
+ <span  id="enabled-{{ pipe.id }}" {% if pipe.status == "enabled" %}
+     style="display:"
+     {% else %}
+     style="display:none"
+     {% endif %}>
+enabled
+   <input type="button" class="button" value="disable" onclick="command($(this).val(), {{ pipe.id }})"/>
+ </span>
+
+{# now display the li if the pipe is disabled #}
+<span id="disabled-{{ pipe.id }}" {% if pipe.status == "disabled" %}
+     style="display:"
+     {% else %}
+     style="display:none"
+     {% endif %}>
+ disabled
+   <input type="button" class="button" value="enable" onclick="command($(this).val(), {{ pipe.id }})"/>
+ </span>
+</span>
+<span>
+<input type="button" class="button" value="Collect Measurements" onclick="command($(this).val(), {{ pipe.id }})"/>
+<input type="button" class="button" value="Instantaneous Measurement" onclick="command($(this).val(), {{ pipe.id }})"/>
+</span>
+</li>
+{% endfor %}
+</div>
+</ul>
+</div>
+{% endblock %}

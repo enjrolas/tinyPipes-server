@@ -1,0 +1,24 @@
+{% load staticfiles %}
+{% load url from future %}
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static "css/style.css" %}">
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Quattrocento:400,700' rel='stylesheet' type='text/css'>
+  {% block styling %}{% endblock %}
+</head>
+<body>
+
+  <div id="userbar"><a href="/admin">Admin</a></div>
+  <center><a href="/"><img src="{% static "images/logo.png" %}" width="400px"></a></center>
+<hr/>
+
+<ul id="navBar">
+<li class="navbar"><a href="{% url "home" %}">Home</a></li>
+<li class="navbar"><a href="{% url "sprinklers" %}">Command Centers</a></li>
+<li class="navbar"><a href="{% url "accounts" %}">Accounts</a></li>
+<li class="navbar"><a href="{% url "logs" %}">Logs</a></li>
+</ul>
+{% block content %}{% endblock %}
+</body>
+</html>

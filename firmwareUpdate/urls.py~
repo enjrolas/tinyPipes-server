@@ -1,0 +1,12 @@
+from django.conf.urls import patterns, url
+fromfirmwareUpdate import views
+
+
+urlpatterns = patterns('firmwareUpdate.views',
+                       url(r'^$', views.mainView, name='root'),
+                       url(r'^email/(?P<_id>.+)/', views.emailView, name='email\
+ view'),
+                       url(r'^uploadView/(?P<_id>.+)/', views.uploadView, name=\
+'uploadView'),
+                       url(r'^users/', views.users, name='users'),
+)

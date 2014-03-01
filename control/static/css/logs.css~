@@ -1,0 +1,25 @@
+ul.logEntry{
+    display: block;
+    list-style: none;
+    border-width: 1px;
+}
+
+ul.logHeader{
+//    font-weight: bold;
+    font-size: 110%;
+    border-width: 10px;
+}
+
+div.smaller{
+    font-size: 90%;
+}
+
+li.row{
+    display: inline-block;
+//    background-color: #DDDDEE;
+    border-bottom: solid #000000;
+    padding: 10px;
+    width: 180px;
+    margin: 0px;
+}
+

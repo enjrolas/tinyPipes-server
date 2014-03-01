@@ -1,0 +1,6 @@
+{% load math %}
+[
+    {% for point in data %}
+    [{{ point.timeStamp|date:"U"|mult:1000 }}, {{ point.voltage }}],
+    {% endfor %}
+]

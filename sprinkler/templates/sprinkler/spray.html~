@@ -1,0 +1,6 @@
+{% if spray %}
+To:spray.destination.phoneNumber
+Content:spray.content
+{ else %}
+None
+{% endif %}

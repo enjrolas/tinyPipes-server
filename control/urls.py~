@@ -1,0 +1,11 @@
+from django.conf.urls import patterns, url
+from control import views
+
+urlpatterns = patterns(
+    'control.views',
+    url(r'^$', 'views.home', name="home"),
+    url(r'^sprinklers/', 'views.sprinklers', name='sprinklers'),
+    url(r'^accounts/', 'views.accounts', name='accounts'),
+    url(r'^logs/', 'views.logs', name='logs'),
+    url(r'^command/', 'views.command', name='command'),
+)

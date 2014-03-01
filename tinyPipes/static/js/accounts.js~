@@ -1,0 +1,20 @@
+$(document).ready(function(e) {
+    adjustHeader();
+});
+
+function adjustHeader(){
+    //get width of the NOT fixed header spans
+    var a = $("span#tid").width();
+    b = $("span#tname").width();
+    c = $("span#tdesc").width();
+    d = $("span#tod1").width();
+    e = $("span#tod2").width();
+
+    //Change the width of the fixed header spans
+    //with the other headers spans
+    $("span#fid").width(a);
+    $("span#fname").width(b);
+    $("span#fdesc").width(c);
+    $("span#fod1").width(d);
+    $("span#fod2").width(e);
+}

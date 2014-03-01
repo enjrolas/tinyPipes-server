@@ -1,0 +1,3 @@
+{% extends "navPage.html" %}
+{% block content %}
+{% endblock %}

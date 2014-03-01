@@ -1,0 +1,12 @@
+from django.conf.urls import patterns, url
+from demo import views
+
+urlpatterns = patterns(
+    'demo.views',
+    url(r'^demo/', 'views.demo'),  
+    url(r'^data-energy/', 'views.energy'),  
+    url(r'^data-voltage/', 'views.voltage'),
+    url(r'^measurement/(?P<voltage>.+)/(?P<current>.+)/(?P<enabled>.+)/', 'views.measurement'),
+    url(r'^demoControl/', 'views.demoControl'),
+    
+    )

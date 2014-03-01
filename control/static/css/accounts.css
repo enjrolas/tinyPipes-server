@@ -1,0 +1,60 @@
+body {
+    margin:0;
+    padding:0;
+}
+
+#fixed {
+    display: none;
+}
+
+li#header > span{
+  border: 2px solid #000; 
+}
+
+img.country{
+   display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div#accounts{
+    margin-top:20px;
+    width:60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.accountTable {
+  display: table;
+  margin: 0px;
+  padding: 0px;
+}
+
+.row {
+  display: table-row;
+}
+
+.row:nth-child(even){
+    background-color: #CCCCFF;
+}
+
+.row > span {
+  list-style:none;
+  display: table-cell;
+  margin-top: 20px;
+  border: 1px solid #EEE; 
+  padding: 10px 6px;
+
+}
+
+.accountHeader {
+  display: table-header-group;
+}
+
+.accountHeader span {
+  background-color: #ccc;
+}
+
+.accountBody {
+  display: table-row-group;
+}

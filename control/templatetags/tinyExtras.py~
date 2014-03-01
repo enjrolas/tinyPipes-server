@@ -1,0 +1,14 @@
+from django import template
+import phonenumbers
+
+register = template.Library()
+
+#prettily formats a phone number that was in e164 format (or any format, but e164 is mostly what we're dealing with                                              
+@register.filter
+def formatNumber(value):
+        return phonenumbers.format_number(phonenumbers.parse(value, None), phonenumbers.PhoneNumberFormat.INTERNATIONAL)
+
+
+@register.filter
+def hey(value):
+        return "hey"
